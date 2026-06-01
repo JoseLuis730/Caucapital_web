@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAU CAPITAL — Real Estate Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════════════ */
+:root {
+  --dark:    #0A0E1A;
+  --mid:     #1C2235;
+  --steel:   #2E3650;
+  --gold:    #B49C62;
+  --gold-lt: #D4BF8A;
+  --ivory:   #F2EFE8;
+  --gray:    #8A8C94;
+  --light:   #F8F7F4;
+  --green:   #1A7A4A;
+  --red:     #B43C2A;
+  --white:   #FFFFFF;
+  --ff-serif: 'Playfair Display', Georgia, serif;
+  --ff-sans:  'DM Sans', system-ui, sans-serif;
+  --ff-mono:  'DM Mono', monospace;
+  --r:       6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--dark); color: var(--ivory); font-family: var(--ff-sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+/* ── TYPOGRAPHY ── */
+h1 { font-family: var(--ff-serif); font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.01em; }
+h2 { font-family: var(--ff-serif); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 500; line-height: 1.15; }
+h3 { font-family: var(--ff-sans); font-size: 1.1rem; font-weight: 500; }
+.eyebrow { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+.mono { font-family: var(--ff-mono); }
+
+/* ── LAYOUT ── */
+.container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
+section { position: relative; }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.75rem; border-radius: var(--r); font-family: var(--ff-sans); font-size: 0.95rem; font-weight: 500; cursor: pointer; border: none; text-decoration: none; transition: all 0.25s ease; white-space: nowrap; }
+.btn-primary { background: var(--gold); color: var(--dark); }
+.btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(180,156,98,0.35); }
+.btn-ghost { background: transparent; color: var(--ivory); border: 1px solid rgba(242,239,232,0.25); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+.btn-outline:hover { background: var(--gold); color: var(--dark); }
+.btn-green { background: var(--green); color: var(--white); }
+.btn-green:hover { background: #1f9459; }
+
+/* ══════════════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════════════ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: 72px; display: flex; align-items: center;
+  background: rgba(10,14,26,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.3s;
+}
+.navbar.scrolled { background: rgba(10,14,26,0.98); border-bottom-color: rgba(180,156,98,0.2); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
+.logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.logo-chevron { position: relative; width: 32px; height: 48px; }
+.logo-chevron::before, .logo-chevron::after {
+  content: ''; position: absolute;
+  width: 0; height: 0;
+  border-top: 22px solid transparent;
+  border-bottom: 22px solid transparent;
+}
+.logo-chevron::before { border-right: 16px solid var(--gold); right: 6px; top: 2px; opacity: 0.7; }
+.logo-chevron::after  { border-right: 18px solid var(--gold); right: 18px; top: 2px; }
+.logo-text { display: flex; flex-direction: column; }
+.logo-name { font-family: var(--ff-sans); font-size: 1.05rem; font-weight: 500; letter-spacing: 0.08em; color: var(--ivory); line-height: 1.1; }
+.logo-line { width: 100%; height: 1px; background: var(--gold); margin: 2px 0; }
+.logo-sub { font-size: 0.55rem; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; }
+.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+.nav-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; position: relative; }
+.nav-links a:hover { color: var(--ivory); }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold); }
+.nav-cta { margin-left: 1rem; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { width: 24px; height: 2px; background: var(--ivory); border-radius: 1px; transition: all 0.3s; }
+
+/* ══════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  padding-top: 72px; position: relative; overflow: hidden;
+  background: var(--dark);
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 60% 80% at 8% 60%, rgba(180,156,98,0.08) 0%, transparent 70%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+}
+.hero-content { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 6rem 2rem 4rem; }
+.hero-eyebrow { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.hero-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--gold); }
+.hero h1 { max-width: 700px; margin-bottom: 1.5rem; }
+.hero h1 em { color: var(--gold); font-style: normal; }
+.hero-sub { font-size: 1.15rem; color: var(--gray); max-width: 520px; margin-bottom: 2.5rem; line-height: 1.7; }
+.hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+
+
+.trust-lbl { font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
+
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* ══════════════════════════════════════════════════════
+   SECTION COMMONS
+══════════════════════════════════════════════════════ */
+.section-header { margin-bottom: 3rem; }
+.section-header .eyebrow { margin-bottom: 0.75rem; display: block; }
+.section-header p { color: var(--gray); max-width: 560px; margin-top: 1rem; font-size: 1.05rem; }
+.gold-line { width: 3rem; height: 2px; background: var(--gold); margin: 1.2rem 0; }
+
+/* ══════════════════════════════════════════════════════
+   SERVICES
+══════════════════════════════════════════════════════ */
+#servicios { background: var(--mid); padding: 6rem 0; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.service-card {
+  background: var(--dark); border-radius: 10px; padding: 2rem;
+  border: 1px solid rgba(255,255,255,0.06); position: relative; overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; cursor: default;
+}
+.service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
+.service-card:hover { transform: translateY(-4px); border-color: rgba(180,156,98,0.3); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-icon { width: 44px; height: 44px; border-radius: 8px; background: rgba(180,156,98,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; font-size: 1.25rem; }
+.service-card h3 { margin-bottom: 0.5rem; color: var(--ivory); }
+.service-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
+.service-cta { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--gold); font-size: 0.85rem; font-weight: 500; margin-top: 1.25rem; opacity: 0; transition: opacity 0.3s; text-decoration: none; }
+.service-card:hover .service-cta { opacity: 1; }
+
+/* ══════════════════════════════════════════════════════
+   PROPERTIES
+══════════════════════════════════════════════════════ */
+#propiedades { padding: 6rem 0; background: var(--dark); }
+.filters-bar { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.5rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.filter-chip { padding: 0.45rem 1.1rem; border-radius: 20px; font-size: 0.85rem; cursor: pointer; border: 1px solid rgba(180,156,98,0.35); color: var(--gold); background: transparent; font-family: var(--ff-sans); transition: all 0.2s; white-space: nowrap; }
+.filter-chip:hover, .filter-chip.active { background: var(--gold); color: var(--dark); border-color: var(--gold); font-weight: 500; }
+.filter-right { margin-left: auto; display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.filter-label { font-size: 0.82rem; color: var(--gray); }
+.view-toggle { display: flex; gap: 2px; background: var(--mid); border-radius: 6px; padding: 3px; }
+.view-btn { padding: 0.35rem 0.8rem; border-radius: 4px; font-size: 0.82rem; cursor: pointer; border: none; background: transparent; color: var(--gray); font-family: var(--ff-sans); transition: all 0.2s; }
+.view-btn.active { background: var(--dark); color: var(--gold); }
+.props-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+.prop-card {
+  background: var(--mid); border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s, box-shadow 0.3s;
+}
+.prop-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(0,0,0,0.35); }
+.prop-img { position: relative; height: 200px; overflow: hidden; background: var(--steel); }
+.prop-img-bg {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.prop-card:hover .prop-img-bg { transform: scale(1.04); }
+.prop-badge { position: absolute; top: 12px; left: 12px; background: var(--gold); color: var(--dark); font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; }
+.prop-status { position: absolute; top: 14px; right: 12px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--mid); }
+.prop-status.available { background: var(--green); }
+.prop-status.reserved { background: var(--red); }
+.prop-body { padding: 1.1rem; }
+.prop-price { font-size: 1.35rem; font-weight: 500; color: var(--ivory); margin-bottom: 0.25rem; font-family: var(--ff-sans); }
+.prop-info { font-size: 0.83rem; color: var(--gray); margin-bottom: 0.4rem; }
+.prop-roi { font-size: 0.88rem; font-weight: 500; color: var(--green); }
+.prop-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 0.9rem 0; }
+.prop-cta { width: 100%; padding: 0.6rem; background: transparent; border: 1px solid var(--gold); border-radius: var(--r); color: var(--gold); font-size: 0.88rem; font-weight: 500; cursor: pointer; font-family: var(--ff-sans); transition: all 0.2s; }
+.prop-cta:hover { background: var(--gold); color: var(--dark); }
+
+/* property image placeholders */
+.prop-img-placeholder { width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gray); }
+.img-apt    { background: linear-gradient(135deg, #2E3650 0%, #1C2235 100%); }
+.img-house  { background: linear-gradient(135deg, #1C3828 0%, #0F2218 100%); }
+.img-office { background: linear-gradient(135deg, #3A2C18 0%, #261C0E 100%); }
+.img-green  { background: linear-gradient(135deg, #1C3040 0%, #0E2030 100%); }
+.img-pent   { background: linear-gradient(135deg, #3A2840 0%, #1C1228 100%); }
+.img-bodega { background: linear-gradient(135deg, #282820 0%, #181810 100%); }
+.img-land   { background: linear-gradient(135deg, #1C3010 0%, #0E2008 100%); }
+
+/* ══════════════════════════════════════════════════════
+   SIMULATOR
+══════════════════════════════════════════════════════ */
+#simulador { background: var(--mid); padding: 6rem 0; }
+.sim-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+.sim-panel { background: var(--dark); border-radius: 10px; padding: 2rem; border: 1px solid rgba(255,255,255,0.07); }
+.sim-panel h3 { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1.5rem; }
+.sim-field { margin-bottom: 1.25rem; }
+.sim-field label { display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--gray); margin-bottom: 0.5rem; }
+.sim-field label span { color: var(--ivory); font-weight: 500; font-family: var(--ff-mono); }
+.sim-slider { width: 100%; -webkit-appearance: none; height: 4px; border-radius: 2px; background: var(--steel); outline: none; cursor: pointer; }
+.sim-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); cursor: pointer; border: 2px solid var(--dark); box-shadow: 0 0 0 2px rgba(180,156,98,0.4); }
+.result-card { background: var(--mid); border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; border-left: 2px solid var(--gold); }
+.result-label { font-size: 0.85rem; color: var(--gray); }
+.result-val { font-size: 1.5rem; font-weight: 500; font-family: var(--ff-serif); }
+.result-val.pos { color: var(--green); }
+.result-val.neg { color: var(--red); }
+.result-val.neu { color: var(--ivory); }
+.chart-container { margin-top: 1rem; }
+.chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 100px; }
+.chart-bar { flex: 1; border-radius: 2px 2px 0 0; transition: opacity 0.2s; cursor: default; }
+.chart-bar:hover { opacity: 0.8; }
+.chart-labels { display: flex; gap: 4px; margin-top: 4px; }
+.chart-label { flex: 1; text-align: center; font-size: 0.6rem; color: var(--gray); }
+.sim-cta-box { grid-column: 1/-1; background: var(--gold); border-radius: 10px; padding: 1.75rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.sim-cta-box h3 { font-size: 1.1rem; color: var(--dark); font-weight: 600; margin-bottom: 0.25rem; }
+.sim-cta-box p { font-size: 0.88rem; color: rgba(10,14,26,0.7); }
+
+/* ══════════════════════════════════════════════════════
+   ABOUT
+══════════════════════════════════════════════════════ */
+#nosotros { padding: 6rem 0; background: var(--dark); }
+.about-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: center; margin-bottom: 5rem; }
+.about-photo { aspect-ratio: 4/3; background: var(--steel); border-radius: 10px; overflow: hidden; position: relative; }
+.about-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(180,156,98,0.08) 0%, transparent 60%); }
+.about-photo-inner { width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:0.9rem; background: linear-gradient(135deg, var(--steel) 0%, var(--mid) 100%); }
+.about-values { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+.value-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; border-radius: 8px; background: var(--mid); border: 1px solid rgba(255,255,255,0.05); transition: border-color 0.2s; }
+.value-item:hover { border-color: rgba(180,156,98,0.25); }
+.value-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
+.value-text h4 { font-size: 0.95rem; font-weight: 500; color: var(--ivory); margin-bottom: 0.2rem; }
+.value-text p { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.team-card { background: var(--mid); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s; }
+.team-card:hover { transform: translateY(-4px); }
+.team-photo { height: 160px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 500; color: var(--gold); font-family: var(--ff-serif); }
+.team-photo.tp1 { background: linear-gradient(135deg, #1C2A3A 0%, #0E1A26 100%); }
+.team-photo.tp2 { background: linear-gradient(135deg, #2A1C0E 0%, #1A0E06 100%); }
+.team-photo.tp3 { background: linear-gradient(135deg, #0E2218 0%, #06120E 100%); }
+.team-gold-line { height: 2px; background: var(--gold); }
+.team-info { padding: 1.1rem; }
+.team-name { font-size: 1.05rem; font-weight: 500; color: var(--ivory); margin-bottom: 0.25rem; }
+.team-role { font-size: 0.82rem; color: var(--gold); margin-bottom: 0.5rem; }
+.team-email { font-size: 0.78rem; color: var(--green); font-family: var(--ff-mono); }
+
+/* ══════════════════════════════════════════════════════
+   NEWS
+══════════════════════════════════════════════════════ */
+#noticias { background: var(--mid); padding: 6rem 0; }
+.news-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; }
+.news-featured { background: var(--dark); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s; cursor: pointer; }
+.news-featured:hover { transform: translateY(-4px); }
+.news-feat-img { height: 240px; background: linear-gradient(135deg, var(--steel) 0%, var(--mid) 100%); display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 0.9rem; }
+.news-feat-body { padding: 1.75rem; }
+.news-cat { display: inline-block; background: rgba(180,156,98,0.12); color: var(--gold); font-size: 0.72rem; font-weight: 500; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.news-feat-body h3 { font-family: var(--ff-serif); font-size: 1.4rem; margin-bottom: 0.75rem; color: var(--ivory); line-height: 1.3; }
+.news-feat-body p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
+.news-date { font-size: 0.78rem; color: var(--gray); margin-top: 1rem; }
+.news-list { display: flex; flex-direction: column; gap: 1rem; }
+.news-item { background: var(--dark); border-radius: 10px; overflow: hidden; display: flex; gap: 0; border: 1px solid rgba(255,255,255,0.06); transition: border-color 0.3s; cursor: pointer; }
+.news-item:hover { border-color: rgba(180,156,98,0.25); }
+.news-item-img { width: 100px; flex-shrink: 0; background: linear-gradient(135deg, var(--steel) 0%, var(--mid) 100%); }
+.news-item-body { padding: 0.9rem 1rem; flex: 1; }
+.news-item-body h4 { font-size: 0.9rem; font-weight: 500; color: var(--ivory); line-height: 1.4; margin-bottom: 0.35rem; }
+.news-item-body .news-date { margin-top: 0; }
+.newsletter { margin-top: 2.5rem; background: var(--dark); border-radius: 10px; padding: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; border: 1px solid rgba(180,156,98,0.2); }
+.newsletter h3 { font-size: 1.1rem; color: var(--ivory); margin-bottom: 0.25rem; }
+.newsletter p { font-size: 0.85rem; color: var(--gray); }
+.newsletter-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.newsletter-form input { padding: 0.65rem 1.1rem; background: var(--mid); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r); color: var(--ivory); font-family: var(--ff-sans); font-size: 0.9rem; outline: none; min-width: 220px; transition: border-color 0.2s; }
+.newsletter-form input:focus { border-color: var(--gold); }
+.newsletter-form input::placeholder { color: var(--gray); }
+
+/* ══════════════════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════════════════ */
+#contacto { padding: 6rem 0; background: var(--dark); }
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.contact-info h2 { margin-bottom: 1rem; }
+.contact-info p { color: var(--gray); margin-bottom: 2rem; font-size: 1.05rem; }
+.contact-detail { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; }
+.contact-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(180,156,98,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.contact-detail-text .label { font-size: 0.78rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+.contact-detail-text .value { color: var(--ivory); font-size: 0.95rem; }
+.whatsapp-cta { display: flex; align-items: center; gap: 0.75rem; background: var(--green); color: var(--white); padding: 1rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; margin-top: 2rem; transition: background 0.2s; }
+.whatsapp-cta:hover { background: #1f9459; }
+.contact-form { background: var(--mid); border-radius: 12px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.06); }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-size: 0.82rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 0.8rem 1rem; background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: var(--r);
+  color: var(--ivory); font-family: var(--ff-sans); font-size: 0.95rem;
+  outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
+.form-group textarea { resize: vertical; min-height: 110px; }
+.form-group select { cursor: pointer; }
+.form-group select option { background: var(--mid); }
+.form-submit { width: 100%; }
+
+/* ══════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════ */
+footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); padding: 3.5rem 0 2rem; }
+.footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand p { color: var(--gray); font-size: 0.88rem; line-height: 1.7; margin-top: 1rem; max-width: 260px; }
+.footer-col h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 1.1rem; font-weight: 500; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer-col ul a { color: var(--gray); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+.footer-col ul a:hover { color: var(--ivory); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { color: var(--gray); font-size: 0.82rem; }
+.footer-bottom a { color: var(--gray); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-bottom a:hover { color: var(--gold); }
+
+/* ══════════════════════════════════════════════════════
+   MOBILE NAV
+══════════════════════════════════════════════════════ */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 999; padding-top: 72px;
+  background: rgba(10,14,26,0.98); backdrop-filter: blur(24px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-size: 1.5rem; color: var(--ivory); text-decoration: none; font-family: var(--ff-serif); transition: color 0.2s; }
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ══════════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════════ */
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .sim-layout { grid-template-columns: 1fr; }
+  .sim-cta-box { grid-column: 1; }
+  .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hamburger { display: flex; }
+
+  .services-grid { grid-template-columns: 1fr; }
+  .props-grid { grid-template-columns: 1fr; }
+  .news-grid { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .sim-cta-box { flex-direction: column; align-items: flex-start; }
+  .newsletter { flex-direction: column; align-items: flex-start; }
+}
+
+/* ══════════════════════════════════════════════════════
+   PROPERTY MODAL
+══════════════════════════════════════════════════════ */
+.prop-card-btns { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.prop-card-btns .prop-cta { flex: 1; }
+.prop-btn-info {
+  flex: 1; padding: 0.6rem; background: transparent;
+  border: 1px solid rgba(242,239,232,0.2); border-radius: var(--r);
+  color: var(--ivory); font-size: 0.88rem; font-weight: 500;
+  cursor: pointer; font-family: var(--ff-sans); transition: all 0.2s;
+}
+.prop-btn-info:hover { border-color: var(--gold-lt); color: var(--gold-lt); }
+
+/* Overlay */
+.prop-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(10,14,26,0.88); backdrop-filter: blur(12px);
+  align-items: center; justify-content: center; padding: 1.5rem;
+}
+.prop-modal-overlay.open { display: flex; }
+
+/* Modal box */
+.prop-modal {
+  background: var(--mid); border-radius: 14px;
+  border: 1px solid rgba(180,156,98,0.2);
+  width: 100%; max-width: 860px; max-height: 90vh;
+  overflow-y: auto; position: relative;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { opacity:0; transform: translateY(20px) scale(0.98); }
+  to   { opacity:1; transform: translateY(0)    scale(1); }
+}
+
+/* Modal close */
+.modal-close {
+  position: sticky; top: 1rem; float: right; margin: 1rem 1rem 0 0;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--ivory); font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; z-index: 10; flex-shrink: 0;
+}
+.modal-close:hover { background: rgba(180,156,98,0.2); border-color: var(--gold); color: var(--gold); }
+
+/* Modal gallery */
+.modal-gallery {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4px; height: 300px; overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+.modal-gallery-main {
+  grid-row: span 2; position: relative; overflow: hidden;
+  background: var(--steel); cursor: pointer;
+}
+.modal-gallery-main img,
+.modal-gallery-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.modal-gallery-main:hover img,
+.modal-gallery-thumb:hover img { transform: scale(1.04); }
+.modal-gallery-thumb {
+  position: relative; overflow: hidden;
+  background: var(--steel); cursor: pointer;
+}
+.gallery-count {
+  position: absolute; inset: 0;
+  background: rgba(10,14,26,0.65);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ivory); font-size: 1rem; font-weight: 500;
+  font-family: var(--ff-serif); letter-spacing: 0.04em;
+}
+
+/* Modal body */
+.modal-body { padding: 2rem 2rem 2.5rem; }
+.modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.modal-title-block { flex: 1; }
+.modal-badge-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.modal-badge { background: var(--gold); color: var(--dark); font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 4px; }
+.modal-status-pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 500;
+}
+.modal-status-pill.available { background: rgba(26,122,74,0.15); color: #4ade80; border: 1px solid rgba(26,122,74,0.35); }
+.modal-status-pill.reserved  { background: rgba(180,60,42,0.15);  color: #f87171; border: 1px solid rgba(180,60,42,0.35); }
+.modal-price { font-size: 2rem; font-weight: 500; color: var(--ivory); font-family: var(--ff-sans); line-height: 1.1; }
+.modal-price-sub { font-size: 0.85rem; color: var(--gray); margin-top: 0.2rem; }
+.modal-roi-pill { background: rgba(26,122,74,0.12); color: #4ade80; border: 1px solid rgba(26,122,74,0.25); border-radius: 8px; padding: 0.6rem 1rem; text-align: center; flex-shrink: 0; }
+.modal-roi-pill .roi-val { font-size: 1.4rem; font-weight: 500; font-family: var(--ff-serif); display: block; }
+.modal-roi-pill .roi-lbl { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Modal specs grid */
+.modal-specs {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem; margin-bottom: 1.75rem;
+  padding: 1.25rem; background: var(--dark); border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.spec-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.spec-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray); }
+.spec-val { font-size: 0.95rem; color: var(--ivory); font-weight: 500; }
+
+/* Modal tabs */
+.modal-tabs { display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 1.5rem; }
+.modal-tab {
+  padding: 0.65rem 1.25rem; font-size: 0.88rem; color: var(--gray);
+  cursor: pointer; border: none; background: transparent;
+  font-family: var(--ff-sans); border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all 0.2s;
+}
+.modal-tab:hover { color: var(--ivory); }
+.modal-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.modal-tab-panel { display: none; }
+.modal-tab-panel.active { display: block; }
+
+/* Description tab */
+.modal-desc { color: var(--gray); line-height: 1.8; font-size: 0.95rem; margin-bottom: 1.25rem; }
+.modal-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1rem; }
+.modal-highlight { display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem; color: var(--ivory); }
+.modal-highlight::before { content: '◆'; color: var(--gold); font-size: 0.5rem; flex-shrink: 0; }
+
+/* Location tab */
+.modal-map-placeholder {
+  width: 100%; height: 260px; border-radius: 10px;
+  background: var(--dark); border: 1px solid rgba(255,255,255,0.08);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.75rem; color: var(--gray); font-size: 0.9rem;
+  position: relative; overflow: hidden;
+}
+.modal-map-placeholder::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(180,156,98,0.05) 0%, transparent 70%);
+}
+.map-pin { font-size: 2.5rem; }
+.modal-address-block { margin-top: 1.25rem; padding: 1rem 1.25rem; background: var(--dark); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); }
+.modal-address-block h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.5rem; }
+.modal-address-block p { font-size: 0.92rem; color: var(--ivory); }
+.modal-address-block span { font-size: 0.82rem; color: var(--gray); }
+
+/* Documents / links tab */
+.modal-docs { display: flex; flex-direction: column; gap: 0.75rem; }
+.modal-doc-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.1rem; background: var(--dark); border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06); text-decoration: none;
+  transition: border-color 0.2s;
+}
+.modal-doc-item:hover { border-color: rgba(180,156,98,0.3); }
+.doc-icon { width: 36px; height: 36px; border-radius: 6px; background: rgba(180,156,98,0.1); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.doc-info { flex: 1; }
+.doc-name { font-size: 0.9rem; color: var(--ivory); font-weight: 500; }
+.doc-type { font-size: 0.78rem; color: var(--gray); }
+.doc-arrow { color: var(--gold); font-size: 0.9rem; }
+
+/* Modal footer CTAs */
+.modal-footer {
+  display: flex; gap: 0.75rem; padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: var(--dark); border-radius: 0 0 14px 14px;
+  flex-wrap: wrap;
+}
+
+/* Responsive modal */
+@media (max-width: 768px) {
+  .modal-gallery { grid-template-columns: 1fr; height: 220px; }
+  .modal-gallery-main { grid-row: span 1; }
+  .modal-gallery-thumb { display: none; }
+  .modal-body { padding: 1.25rem 1.25rem 1.75rem; }
+  .modal-footer { padding: 1.25rem; }
+  .modal-highlights { grid-template-columns: 1fr; }
+  .modal-header { flex-direction: column; }
+  .prop-card-btns { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#inicio" class="logo">
+      <div class="logo-chevron"></div>
+      <div class="logo-text">
+        <span class="logo-name">CAU CAPITAL</span>
+        <div class="logo-line"></div>
+        <span class="logo-sub">Real Estate Advisory</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#propiedades">Propiedades</a></li>
+      <li><a href="#simulador">Simulador</a></li>
+      <li><a href="#noticias">Noticias</a></li>
+    </ul>
+    <a href="#contacto" class="btn btn-primary nav-cta">Contactar</a>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#nosotros" onclick="toggleMenu()">Nosotros</a>
+  <a href="#servicios" onclick="toggleMenu()">Servicios</a>
+  <a href="#propiedades" onclick="toggleMenu()">Propiedades</a>
+  <a href="#simulador" onclick="toggleMenu()">Simulador</a>
+  <a href="#noticias" onclick="toggleMenu()">Noticias</a>
+  <a href="#contacto" onclick="toggleMenu()" class="btn btn-primary" style="margin-top:1rem">Contactar</a>
+</div>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow">Broker Inmobiliario · Santiago, Chile</span>
+    </div>
+    <h1>Tu patrimonio,<br><em>nuestra especialidad.</em></h1>
+    <p class="hero-sub">Asesoría estratégica para inversionistas que buscan rentabilidad con criterio, datos reales y respaldo profesional.</p>
+    <div class="hero-ctas">
+      <a href="#contacto" class="btn btn-primary">Comenzar ↗</a>
+      <a href="#propiedades" class="btn btn-ghost">Ver propiedades</a>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ═══════════════════════ SERVICIOS ═══════════════════════ -->
+<section id="servicios">
+  <div class="container" style="padding: 6rem 2rem;">
+    <div class="section-header fade-in">
+      <span class="eyebrow">Nuestros servicios</span>
+      <h2>Asesoría integral.<br>Sin letra chica.</h2>
+      <div class="gold-line"></div>
+      <p>Acompañamos cada etapa de tu inversión con criterio experto y transparencia total.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">◆</div>
+        <h3>Compra para inversión</h3>
+        <p>Análisis de ROI, selección rigurosa de activos y acompañamiento completo hasta la escrituración.</p>
+        <a href="#contacto" class="service-cta">Saber más →</a>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">▲</div>
+        <h3>Venta estratégica</h3>
+        <p>Estrategia de salida con valorización óptima y acceso a nuestra red de compradores calificados.</p>
+        <a href="#contacto" class="service-cta">Saber más →</a>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">◎</div>
+        <h3>Arriendo gestionado</h3>
+        <p>Búsqueda de arrendatario, contratos y seguimiento mensual del flujo de tu propiedad.</p>
+        <a href="#contacto" class="service-cta">Saber más →</a>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">○</div>
+        <h3>Asesoría patrimonial</h3>
+        <p>Planificación de cartera para optimizar retorno, diversificación y resguardo de tu patrimonio.</p>
+        <a href="#contacto" class="service-cta">Saber más →</a>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">✦</div>
+        <h3>Tasación premium</h3>
+        <p>Valor de mercado real con metodología rigurosa e imparcial, sustentado en datos actualizados.</p>
+        <a href="#contacto" class="service-cta">Saber más →</a>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">⬡</div>
+        <h3>Remodelaciones</h3>
+        <p>Coordinación de obras para aumentar el valor y la rentabilidad de tu activo inmobiliario.</p>
+        <a href="#contacto" class="service-cta">Saber más →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PROPIEDADES ═══════════════════════ -->
+<section id="propiedades">
+  <div class="container" style="padding: 6rem 2rem;">
+    <div class="section-header fade-in">
+      <span class="eyebrow">Catálogo exclusivo</span>
+      <h2>Propiedades seleccionadas<br>con criterio.</h2>
+      <div class="gold-line"></div>
+      <p>Solo mostramos lo que recomendaríamos nosotros mismos.</p>
+    </div>
+    <div class="filters-bar fade-in">
+      <button class="filter-chip active" onclick="filterProps(this,'all')">Todos</button>
+      <button class="filter-chip" onclick="filterProps(this,'dep')">Departamento</button>
+      <button class="filter-chip" onclick="filterProps(this,'casa')">Casa</button>
+      <button class="filter-chip" onclick="filterProps(this,'oficina')">Oficina</button>
+      <button class="filter-chip" onclick="filterProps(this,'terreno')">Terreno</button>
+      <button class="filter-chip" onclick="filterProps(this,'bodega')">Bodega</button>
+      <button class="filter-chip" onclick="filterProps(this,'nuevo')">Nuevo</button>
+      <div class="filter-right">
+        <span class="filter-label">UF 500 – 20.000</span>
+        <div class="view-toggle">
+          <button class="view-btn active">⊞ Grilla</button>
+          <button class="view-btn">◉ Mapa</button>
+        </div>
+      </div>
+    </div>
+    <div class="props-grid" id="propsGrid">
+      <div class="prop-card fade-in" data-type="dep nuevo">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fit=crop&crop=center" alt="Departamento · Ñuñoa" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Departamento</span>
+        <div class="prop-status available"></div>
+        <div class="prop-body">
+          <div class="prop-price">4.850 UF</div>
+          <div class="prop-info">Ñuñoa · 52 m² · 1D 1B · Nuevo</div>
+          <div class="prop-roi">ROI 5.2% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('dep-nunoa')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Departamento Ñuñoa 4.850 UF')">Agendar →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="casa">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fit=crop&crop=center" alt="Casa · Las Condes" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Casa</span>
+        <div class="prop-status available"></div>
+        <div class="prop-body">
+          <div class="prop-price">9.200 UF</div>
+          <div class="prop-info">Las Condes · 110 m² · 3D 2B</div>
+          <div class="prop-roi">ROI 4.8% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('casa-lascondes')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Casa Las Condes 9.200 UF')">Agendar →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="oficina">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&fit=crop&crop=center" alt="Oficina · Providencia" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Oficina</span>
+        <div class="prop-status reserved"></div>
+        <div class="prop-body">
+          <div class="prop-price">6.400 UF</div>
+          <div class="prop-info">Providencia · 65 m² · En evaluación</div>
+          <div class="prop-roi">ROI 6.1% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('oficina-providencia')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Oficina Providencia 6.400 UF')">Lista de espera →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="dep nuevo">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fit=crop&crop=center" alt="Departamento en verde" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Dpto · Verde</span>
+        <div class="prop-status available"></div>
+        <div class="prop-body">
+          <div class="prop-price">3.950 UF</div>
+          <div class="prop-info">San Miguel · 44 m² · 1D 1B · Nuevo</div>
+          <div class="prop-roi">ROI 5.8% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('dep-verde-sanmiguel')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Dpto Verde San Miguel 3.950 UF')">Agendar →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="dep">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fit=crop&crop=center" alt="Penthouse · Vitacura" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Penthouse</span>
+        <div class="prop-status available"></div>
+        <div class="prop-body">
+          <div class="prop-price">14.500 UF</div>
+          <div class="prop-info">Vitacura · 180 m² · 3D 3B · Terraza</div>
+          <div class="prop-roi">ROI 4.2% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('penthouse-vitacura')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Penthouse Vitacura 14.500 UF')">Agendar →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="bodega">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80&fit=crop&crop=center" alt="Bodega · Pudahuel" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Bodega</span>
+        <div class="prop-status reserved"></div>
+        <div class="prop-body">
+          <div class="prop-price">1.200 UF</div>
+          <div class="prop-info">Pudahuel · 80 m² · Industrial</div>
+          <div class="prop-roi">ROI 7.2% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('bodega-pudahuel')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Bodega Pudahuel 1.200 UF')">Lista de espera →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="terreno">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80&fit=crop&crop=center" alt="Terreno · Vitacura" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Terreno</span>
+        <div class="prop-status available"></div>
+        <div class="prop-body">
+          <div class="prop-price">12.000 UF</div>
+          <div class="prop-info">Vitacura · 320 m² · Uso mixto</div>
+          <div class="prop-roi">Cap Rate 5.0%</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('terreno-vitacura')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Terreno Vitacura 12.000 UF')">Agendar →</button>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card fade-in" data-type="dep">
+        <div class="prop-img"><img class="prop-img-bg" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fit=crop&crop=center" alt="Departamento · La Reina" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
+        <span class="prop-badge">Departamento</span>
+        <div class="prop-status available"></div>
+        <div class="prop-body">
+          <div class="prop-price">5.200 UF</div>
+          <div class="prop-info">La Reina · 60 m² · 2D 1B</div>
+          <div class="prop-roi">ROI 4.9% anual</div>
+          <div class="prop-divider"></div>
+          <div class="prop-card-btns">
+            <button class="prop-btn-info" onclick="openPropModal('dep-lareina')">+ Info</button>
+            <button class="prop-cta" onclick="openContact('Departamento La Reina 5.200 UF')">Agendar →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SIMULADOR ═══════════════════════ -->
+<section id="simulador">
+  <div class="container" style="padding: 6rem 2rem;">
+    <div class="section-header fade-in">
+      <span class="eyebrow">Herramienta exclusiva</span>
+      <h2>Simula tu inversión<br>en tiempo real.</h2>
+      <div class="gold-line"></div>
+      <p>Ningún broker en Chile ofrece esto públicamente. Conoce tu retorno antes de comprometerte.</p>
+    </div>
+    <div class="sim-layout">
+      <div class="sim-panel fade-in">
+        <h3>Parámetros de inversión</h3>
+        <div class="sim-field">
+          <label>Precio de la propiedad <span id="lUF">4.500 UF</span></label>
+          <input type="range" class="sim-slider" min="500" max="20000" step="100" value="4500" oninput="updateSim('uf',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Pie inicial <span id="lPie">20%</span></label>
+          <input type="range" class="sim-slider" min="10" max="50" step="1" value="20" oninput="updateSim('pie',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Arriendo mensual estimado <span id="lArriendo">12 UF/mes</span></label>
+          <input type="range" class="sim-slider" min="3" max="60" step="0.5" value="12" oninput="updateSim('arriendo',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Tasa dividendo anual <span id="lTasa">4.5%</span></label>
+          <input type="range" class="sim-slider" min="2" max="10" step="0.1" value="4.5" oninput="updateSim('tasa',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Plazo crédito <span id="lPlazo">20 años</span></label>
+          <input type="range" class="sim-slider" min="5" max="30" step="1" value="20" oninput="updateSim('plazo',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Gastos comunes <span id="lGC">0.8 UF/mes</span></label>
+          <input type="range" class="sim-slider" min="0" max="5" step="0.1" value="0.8" oninput="updateSim('gc',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Vacancia estimada <span id="lVac">5%</span></label>
+          <input type="range" class="sim-slider" min="0" max="30" step="1" value="5" oninput="updateSim('vac',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Contribuciones anuales <span id="lContrib">1.2 UF</span></label>
+          <input type="range" class="sim-slider" min="0" max="8" step="0.1" value="1.2" oninput="updateSim('contrib',this.value)">
+        </div>
+        <div class="sim-field">
+          <label>Apreciación anual estimada <span id="lApreciacion">2.0%</span></label>
+          <input type="range" class="sim-slider" min="0" max="10" step="0.5" value="2" oninput="updateSim('apreciacion',this.value)">
+        </div>
+        <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.07);">
+          <p style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem;">Parámetros VAN / TIR</p>
+          <div class="sim-field">
+            <label>Horizonte de análisis <span id="lVanAnios">10 años</span></label>
+            <select id="vanHorizonte" onchange="updateVanParams()"
+              style="width:100%;margin-top:0.4rem;background:var(--steel);color:var(--ivory);border:1px solid rgba(180,156,98,0.35);border-radius:6px;padding:0.55rem 0.75rem;font-size:0.88rem;font-family:var(--ff-sans);cursor:pointer;outline:none;">
+              <option value="5">5 años</option>
+              <option value="7">7 años</option>
+              <option value="10" selected>10 años</option>
+            </select>
+          </div>
+          <div class="sim-field" style="margin-bottom:0">
+            <label>Tasa de descuento <span id="lVanTasa">6.0%</span></label>
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-top:0.4rem;">
+              <input id="vanTasa" type="range" class="sim-slider" min="1" max="15" step="0.5" value="6"
+                style="flex:1" oninput="updateVanParams()">
+              <span style="font-size:0.88rem;color:var(--ivory);font-weight:500;min-width:3rem;text-align:right;" id="lVanTasaNum">6.0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sim-panel fade-in">
+        <h3>Resultados</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+
+          <!-- ROI Bruto -->
+          <div class="result-card" style="margin:0">
+            <span class="result-label">ROI Bruto Anual</span>
+            <span class="result-val" id="rBruto">—</span>
+          </div>
+
+          <!-- ROI Neto -->
+          <div class="result-card" style="margin:0">
+            <span class="result-label">ROI Neto Anual</span>
+            <span class="result-val" id="rNeto">—</span>
+          </div>
+
+          <!-- Flujo Mensual — font reducido para que quepa en 1 línea -->
+          <div class="result-card" style="margin:0">
+            <span class="result-label">Flujo Mensual Neto</span>
+            <span class="result-val" id="rFlujo" style="font-size:1.15rem;white-space:nowrap;">—</span>
+          </div>
+
+          <!-- Cap Rate — nota al fondo -->
+          <div class="result-card" style="margin:0;flex-direction:column;align-items:flex-start;gap:0.15rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+              <span class="result-label">Cap Rate</span>
+              <span class="result-val" id="rCapRate">—</span>
+            </div>
+            <span style="font-size:0.68rem;color:var(--gray);">NOI / Valor propiedad</span>
+          </div>
+
+          <!-- VAN — mismo tamaño, nota al fondo, ocupa 1 columna -->
+          <div class="result-card" style="margin:0;flex-direction:column;align-items:flex-start;gap:0.15rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+              <span class="result-label">VAN</span>
+              <span class="result-val" id="rVAN" style="font-size:1.15rem;white-space:nowrap;">—</span>
+            </div>
+            <span id="rVANlabel" style="font-size:0.68rem;color:var(--gray);">10 años · tasa 6.0%</span>
+          </div>
+
+          <!-- TIR — nota al fondo -->
+          <div class="result-card" style="margin:0;flex-direction:column;align-items:flex-start;gap:0.15rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+              <span class="result-label">TIR Anual</span>
+              <span class="result-val" id="rTIR">—</span>
+            </div>
+            <span style="font-size:0.68rem;color:var(--gray);">Retorno interno real</span>
+          </div>
+
+        </div>
+        <div class="result-card">
+          <span class="result-label">Punto de Equilibrio</span>
+          <span class="result-val neu" id="rEquil">—</span>
+        </div>
+        <div class="chart-container">
+          <p class="eyebrow" style="margin-bottom:0.75rem;font-size:0.68rem;">Rentabilidad acumulada — 15 años</p>
+          <div class="chart-bars" id="chartBars"></div>
+          <div class="chart-labels" id="chartLabels"></div>
+        </div>
+      </div>
+      <div class="sim-cta-box fade-in">
+        <div>
+          <h3>¿Quieres análisis con propiedades reales?</h3>
+          <p>Un asesor CAU CAPITAL revisará tu perfil y te enviará opciones personalizadas con cifras reales del mercado.</p>
+        </div>
+        <a href="#contacto" class="btn" style="background:var(--dark);color:var(--gold);border:1px solid var(--dark);flex-shrink:0;">Solicitar análisis →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ QUIENES SOMOS ═══════════════════════ -->
+<section id="nosotros">
+  <div class="container" style="padding: 6rem 2rem;">
+    <div class="about-layout">
+      <div class="fade-in">
+        <span class="eyebrow">Quiénes somos</span>
+        <h2 style="margin-top:0.75rem;">No somos un portal.<br>Somos tu asesor.</h2>
+        <div class="gold-line"></div>
+        <p style="color:var(--gray);line-height:1.8;margin-bottom:1.5rem;">CAU CAPITAL nace de la convicción de que el mercado inmobiliario chileno necesita un asesor que priorice el resultado del inversionista por sobre la comisión.</p>
+        <p style="color:var(--gray);line-height:1.8;margin-bottom:2rem;">Operamos con transparencia total, datos reales y una selección rigurosa de activos en el mercado ABC1 de Santiago. No vendemos propiedades: construimos patrimonio.</p>
+        <div class="about-values">
+          <div class="value-item"><div class="value-dot"></div><div class="value-text"><h4>Transparencia radical</h4><p>Sin letra chica, sin promesas vacías, sin sorpresas.</p></div></div>
+          <div class="value-item"><div class="value-dot"></div><div class="value-text"><h4>Criterio experto</h4><p>Solo recomendamos lo que nosotros mismos compraríamos.</p></div></div>
+          <div class="value-item"><div class="value-dot"></div><div class="value-text"><h4>Relación a largo plazo</h4><p>Somos tu asesor antes, durante y después de la inversión.</p></div></div>
+        </div>
+      </div>
+      <div class="about-photo fade-in">
+        <div class="about-photo-inner">Fotografía editorial del equipo</div>
+      </div>
+    </div>
+    <div class="fade-in" style="margin-bottom:1.5rem;">
+      <span class="eyebrow">El equipo</span>
+      <h2 style="margin-top:0.75rem;">Socios Fundadores</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-in">
+        <div class="team-photo tp1">MT</div>
+        <div class="team-gold-line"></div>
+        <div class="team-info">
+          <div class="team-name">María Teresa Arellano</div>
+          <div class="team-role">Socia Fundadora</div>
+          <div class="team-email">terearellano@caucapital.cl</div>
+        </div>
+      </div>
+      <div class="team-card fade-in">
+        <div class="team-photo tp2">RU</div>
+        <div class="team-gold-line"></div>
+        <div class="team-info">
+          <div class="team-name">Rodrigo Urrutia</div>
+          <div class="team-role">Socio Fundador</div>
+          <div class="team-email">rurrutia@caucapital.cl</div>
+        </div>
+      </div>
+      <div class="team-card fade-in">
+        <div class="team-photo tp3">JL</div>
+        <div class="team-gold-line"></div>
+        <div class="team-info">
+          <div class="team-name">José Luis Campino</div>
+          <div class="team-role">Socio Fundador</div>
+          <div class="team-email">jcampino@caucapital.cl</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ NOTICIAS ═══════════════════════ -->
+<section id="noticias">
+  <div class="container" style="padding: 6rem 2rem;">
+    <div class="section-header fade-in">
+      <span class="eyebrow">Análisis del mercado</span>
+      <h2>Información que<br>construye criterio.</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="news-grid">
+      <div class="news-featured fade-in">
+        <div class="news-feat-img">Fotografía editorial</div>
+        <div class="news-feat-body">
+          <span class="news-cat">Mercado</span>
+          <h3>Rentabilidades del mercado de arriendo en Santiago: análisis por comuna 2025</h3>
+          <p>Un análisis detallado de los rendimientos reales del mercado de arriendo en las principales comunas de Santiago, con datos actualizados y proyecciones para el próximo año.</p>
+          <div class="news-date">12 de Abril, 2025</div>
+        </div>
+      </div>
+      <div class="news-list">
+        <div class="news-item fade-in">
+          <div class="news-item-img"></div>
+          <div class="news-item-body">
+            <span class="news-cat">Regulación</span>
+            <h4>Nueva ley de arriendo: lo que debes saber como propietario</h4>
+            <div class="news-date">8 de Abril, 2025</div>
+          </div>
+        </div>
+        <div class="news-item fade-in">
+          <div class="news-item-img"></div>
+          <div class="news-item-body">
+            <span class="news-cat">Tips</span>
+            <h4>5 errores al comprar tu primera propiedad de inversión</h4>
+            <div class="news-date">1 de Abril, 2025</div>
+          </div>
+        </div>
+        <div class="news-item fade-in">
+          <div class="news-item-img"></div>
+          <div class="news-item-body">
+            <span class="news-cat">Financiero</span>
+            <h4>Crédito hipotecario 2025: tasas, condiciones y cómo negociar</h4>
+            <div class="news-date">25 de Marzo, 2025</div>
+          </div>
+        </div>
+        <div class="news-item fade-in">
+          <div class="news-item-img"></div>
+          <div class="news-item-body">
+            <span class="news-cat">Inversión</span>
+            <h4>Bodegas y estacionamientos: el activo que más rentó en Santiago</h4>
+            <div class="news-date">18 de Marzo, 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="newsletter fade-in">
+      <div>
+        <h3>Recibe análisis semanales del mercado</h3>
+        <p>Información real, sin spam. Solo lo que necesitas para invertir mejor.</p>
+      </div>
+      <form id="nlForm" action="https://formspree.io/f/XXXXXXXX" method="POST" style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+        <input type="hidden" name="_subject" value="📧 Nueva suscripción newsletter CAU CAPITAL">
+        <input type="text" name="_gotcha" style="display:none">
+        <input type="email" name="email" placeholder="tu@correo.cl" required
+          style="padding:0.65rem 1.1rem;background:var(--mid);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);color:var(--ivory);font-family:var(--ff-sans);font-size:0.9rem;outline:none;min-width:220px;transition:border-color 0.2s;"
+          onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        <button type="submit" class="btn btn-primary" id="nlBtn">Suscribirme →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CONTACTO ═══════════════════════ -->
+<section id="contacto" style="padding: 6rem 0; background: var(--mid);">
+  <div class="container" style="padding: 0 2rem;">
+    <div class="contact-layout">
+      <div class="fade-in">
+        <span class="eyebrow">Contacto</span>
+        <h2 style="margin-top:0.75rem;">Conversemos.<br>Sin compromiso.</h2>
+        <div class="gold-line"></div>
+        <p style="color:var(--gray);margin-bottom:2rem;">La primera reunión es gratuita y sin obligación de contratar. Cuéntanos tu objetivo y encontraremos la mejor estrategia para tu patrimonio.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail-text"><div class="label">Dirección</div><div class="value">Las Condes, Santiago, Chile</div></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📧</div>
+          <div class="contact-detail-text"><div class="label">Email</div><div class="value">terearellano@caucapital.cl</div></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail-text"><div class="label">Teléfono</div><div class="value">+56 9 XXXX XXXX</div></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-detail-text"><div class="label">Horario</div><div class="value">Lunes – Viernes · 9:00 – 18:00</div></div>
+        </div>
+        <a href="https://wa.me/56900000000" class="whatsapp-cta">
+          <span>💬</span> WhatsApp directo →
+        </a>
+      </div>
+      <div class="contact-form fade-in" id="contactForm">
+        <!-- ⚙️ FORMSPREE: reemplaza XXXXXXXX con tu ID de Formspree -->
+        <!-- Pasos: 1) Ve a formspree.io/register  2) New Form  3) Copia el ID  4) Pégalo aquí -->
+        <form id="fsForm" action="https://formspree.io/f/XXXXXXXX" method="POST" novalidate>
+          <!-- Campo oculto: asunto del email que recibirás -->
+          <input type="hidden" name="_subject" value="🏠 Nuevo contacto desde CAU CAPITAL">
+          <!-- Honeypot anti-spam -->
+          <input type="text" name="_gotcha" style="display:none">
+
+          <div class="form-group">
+            <label>Nombre completo *</label>
+            <input type="text" name="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label>Teléfono / WhatsApp *</label>
+            <input type="tel" name="telefono" placeholder="+56 9 XXXX XXXX" required>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" placeholder="tu@correo.cl" required>
+          </div>
+          <div class="form-group">
+            <label>¿Qué necesitas?</label>
+            <select name="servicio">
+              <option value="">Seleccionar...</option>
+              <option>Compra para inversión</option>
+              <option>Venta de propiedad</option>
+              <option>Arriendo gestionado</option>
+              <option>Asesoría patrimonial</option>
+              <option>Simulación de inversión</option>
+              <option>Otra consulta</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mensaje (opcional)</label>
+            <textarea name="mensaje" placeholder="Cuéntanos más sobre tu objetivo..."></textarea>
+          </div>
+
+          <!-- Estado del formulario -->
+          <div id="fsStatus" style="display:none;padding:0.9rem 1rem;border-radius:var(--r);margin-bottom:1rem;font-size:0.9rem;font-weight:500;"></div>
+
+          <button type="submit" class="btn btn-primary form-submit" id="fsBtn">Enviar mensaje →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#inicio" class="logo" style="margin-bottom:0.5rem;display:inline-flex">
+          <div class="logo-chevron"></div>
+          <div class="logo-text">
+            <span class="logo-name">CAU CAPITAL</span>
+            <div class="logo-line"></div>
+            <span class="logo-sub">Real Estate Advisory</span>
+          </div>
+        </a>
+        <p>Broker inmobiliario boutique en Santiago, Chile. Asesoría estratégica para inversionistas que buscan rentabilidad con criterio.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#propiedades">Propiedades</a></li>
+          <li><a href="#simulador">Simulador</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#contacto">Compra para inversión</a></li>
+          <li><a href="#contacto">Venta estratégica</a></li>
+          <li><a href="#contacto">Arriendo gestionado</a></li>
+          <li><a href="#contacto">Asesoría patrimonial</a></li>
+          <li><a href="#contacto">Tasación premium</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:terearellano@caucapital.cl">terearellano@caucapital.cl</a></li>
+          <li><a href="tel:+56900000000">+56 9 XXXX XXXX</a></li>
+          <li><a href="#">Las Condes, Santiago</a></li>
+          <li><a href="https://wa.me/56900000000" style="color:var(--green)">WhatsApp →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 CAU CAPITAL SpA · Todos los derechos reservados</p>
+      <div style="display:flex;gap:1.5rem">
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos de uso</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════ PROPERTY MODAL ═══════════════════════ -->
+<div class="prop-modal-overlay" id="propModalOverlay" onclick="closePropModal(event)">
+  <div class="prop-modal" id="propModal">
+    <button class="modal-close" onclick="closePropModalDirect()">✕</button>
+
+    <!-- Gallery -->
+    <div class="modal-gallery" id="modalGallery">
+      <div class="modal-gallery-main" id="modalImg1"></div>
+      <div class="modal-gallery-thumb" id="modalImg2"></div>
+      <div class="modal-gallery-thumb" id="modalImg3">
+        <div class="gallery-count" id="modalImgCount"></div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <div class="modal-header">
+        <div class="modal-title-block">
+          <div class="modal-badge-row">
+            <span class="modal-badge" id="modalBadge">Departamento</span>
+            <span class="modal-status-pill available" id="modalStatusPill">● Disponible</span>
+          </div>
+          <div class="modal-price" id="modalPrice">4.850 UF</div>
+          <div class="modal-price-sub" id="modalPriceSub">Ñuñoa · 52 m² · 1D 1B</div>
+        </div>
+        <div class="modal-roi-pill">
+          <span class="roi-val" id="modalRoi">5.2%</span>
+          <span class="roi-lbl">ROI anual</span>
+        </div>
+      </div>
+
+      <!-- Specs -->
+      <div class="modal-specs" id="modalSpecs"></div>
+
+      <!-- Tabs -->
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchTab(this,'tabDesc')">Descripción</button>
+        <button class="modal-tab" onclick="switchTab(this,'tabLocation')">Ubicación</button>
+        <button class="modal-tab" onclick="switchTab(this,'tabDocs')">Antecedentes</button>
+      </div>
+
+      <!-- Tab: Descripción -->
+      <div class="modal-tab-panel active" id="tabDesc">
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-highlights" id="modalHighlights"></div>
+      </div>
+
+      <!-- Tab: Ubicación -->
+      <div class="modal-tab-panel" id="tabLocation">
+        <div class="modal-map-placeholder">
+          <div class="map-pin">📍</div>
+          <p id="modalMapLabel">Cargando ubicación...</p>
+          <a id="modalMapLink" href="#" target="_blank" class="btn btn-outline" style="margin-top:0.5rem;font-size:0.85rem;">Ver en Google Maps →</a>
+        </div>
+        <div class="modal-address-block" style="margin-top:1.25rem;">
+          <h4>Dirección referencial</h4>
+          <p id="modalAddress">—</p>
+          <span id="modalAddressSub"></span>
+        </div>
+      </div>
+
+      <!-- Tab: Antecedentes -->
+      <div class="modal-tab-panel" id="tabDocs">
+        <div class="modal-docs" id="modalDocs"></div>
+      </div>
+    </div>
+
+    <!-- Footer CTAs -->
+    <div class="modal-footer">
+      <a id="modalWhatsApp" href="#" target="_blank" class="btn btn-green" style="flex:1;justify-content:center;">💬 Consultar por WhatsApp</a>
+      <button id="modalContactBtn" class="btn btn-primary" style="flex:1;justify-content:center;">Agendar visita →</button>
+      <a id="modalProjectLink" href="#" target="_blank" class="btn btn-outline" style="flex:1;justify-content:center;">Ver sitio del proyecto ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── NAVBAR SCROLL ─────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// ─── MOBILE MENU ────────────────────────────────────────────────────
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ─── FADE IN ON SCROLL ──────────────────────────────────────────────
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// ─── PROP FILTER ────────────────────────────────────────────────────
+function filterProps(btn,type){
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.prop-card').forEach(card=>{
+    if(type==='all'||card.dataset.type.includes(type)){
+      card.style.display=''; card.style.animation='fadeUp 0.4s ease forwards';
+    } else { card.style.display='none'; }
+  });
+}
+
+// ─── VAN PARAMS UPDATE ───────────────────────────────────────────────
+function updateVanParams(){
+  const anios = document.getElementById('vanHorizonte')?.value || '10';
+  const tasa  = document.getElementById('vanTasa')?.value || '6';
+  const lAnios = document.getElementById('lVanAnios');
+  const lTasa  = document.getElementById('lVanTasa');
+  const lTasaNum = document.getElementById('lVanTasaNum');
+  if(lAnios)   lAnios.textContent   = anios+' años';
+  if(lTasa)    lTasa.textContent    = parseFloat(tasa).toFixed(1)+'%';
+  if(lTasaNum) lTasaNum.textContent = parseFloat(tasa).toFixed(1)+'%';
+  calcSim();
+}
+function openContact(propName){
+  document.getElementById('contacto').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const sel=document.querySelector('#contactForm select');
+    if(sel) sel.value='Compra para inversión';
+    const ta=document.querySelector('#contactForm textarea');
+    if(ta) ta.value='Me interesa conocer más sobre: '+propName;
+  },800);
+}
+
+// ─── SIMULATOR ───────────────────────────────────────────────────────
+const simState={uf:4500,pie:20,arriendo:12,tasa:4.5,plazo:20,gc:0.8,vac:5,contrib:1.2,apreciacion:2};
+
+function updateSim(key,val){
+  simState[key]=parseFloat(val);
+  const labels={
+    uf:v=>Math.round(v).toLocaleString('es-CL')+' UF',
+    pie:v=>v+'%', arriendo:v=>parseFloat(v).toFixed(1)+' UF/mes',
+    tasa:v=>parseFloat(v).toFixed(1)+'%', plazo:v=>v+' años',
+    gc:v=>parseFloat(v).toFixed(1)+' UF/mes', vac:v=>v+'%',
+    contrib:v=>parseFloat(v).toFixed(1)+' UF',
+    apreciacion:v=>parseFloat(v).toFixed(1)+'%'
+  };
+  const ids={uf:'lUF',pie:'lPie',arriendo:'lArriendo',tasa:'lTasa',plazo:'lPlazo',gc:'lGC',vac:'lVac',contrib:'lContrib',apreciacion:'lApreciacion'};
+  document.getElementById(ids[key]).textContent=labels[key](val);
+  calcSim();
+}
+
+function calcSim(){
+  const {uf,pie,arriendo,tasa,plazo,gc,vac,contrib,apreciacion}=simState;
+
+  // ── Base calculations
+  const prestamo  = uf*(1-pie/100);
+  const r         = tasa/100/12;
+  const n         = plazo*12;
+  const div       = r===0 ? prestamo/n : prestamo*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+  const arriendoEf= arriendo*(1-vac/100);         // arriendo con vacancia
+  const gastosOp  = gc + contrib/12;               // gastos operacionales mensuales (SIN dividendo)
+
+  // ── ROI Bruto: arriendo bruto anual / precio total
+  const roiBruto  = (arriendo*12/uf)*100;
+
+  // ── NOI y ROI Neto: solo descuenta gastos operacionales, NO el dividendo
+  // (el dividendo es costo de financiamiento, no operacional)
+  const noiMes    = arriendoEf - gastosOp;
+  const noiAnual  = noiMes*12;
+  const roiNeto   = (noiAnual/uf)*100;
+
+  // ── Cap Rate = NOI / Valor propiedad (métrica estándar, sin deuda)
+  const capRate   = roiNeto;  // idéntico al ROI neto en este cálculo
+
+  // ── Flujo mensual: lo que entra menos TODO lo que sale (incluye dividendo)
+  // Este es el flujo real de caja del inversionista mes a mes
+  const flujoMes  = arriendoEf - gastosOp - div;
+
+  // ── Punto de equilibrio basado en ROI neto
+  const equil     = roiNeto>0 ? Math.ceil(100/roiNeto) : 999;
+
+  // ── VAN: horizonte y tasa desde selectores (default 10 años, 6%)
+  const vanAnios     = parseInt(document.getElementById('vanHorizonte')?.value || '10');
+  const vanTasaInput = parseFloat(document.getElementById('vanTasa')?.value || '6');
+  const tDesc        = (isNaN(vanTasaInput) || vanTasaInput<=0 ? 6 : vanTasaInput) / 100;
+  const invInicial   = uf*(pie/100);
+  // Valor residual al año elegido — usa tasa de apreciación del slider
+  const tasaApreciacion = apreciacion/100;
+  const saldoDeuda   = prestamo * Math.pow(1+tasa/100/12, vanAnios*12) -
+                       div * (Math.pow(1+tasa/100/12, vanAnios*12)-1) / (tasa/100/12||1);
+  const valorResidual= uf*Math.pow(1+tasaApreciacion,vanAnios) - Math.max(0, saldoDeuda);
+  let van = -invInicial;
+  for(let y=1;y<=vanAnios;y++) van += flujoMes*12/Math.pow(1+tDesc,y);
+  van += valorResidual/Math.pow(1+tDesc,vanAnios);
+  // Label dinámico
+  const vanLabel = document.getElementById('rVANlabel');
+  if(vanLabel) vanLabel.textContent = vanAnios+' años · tasa '+(tDesc*100).toFixed(1)+'%';
+
+  // ── TIR: Newton-Raphson sobre el mismo horizonte del VAN
+  function npv(rate,flows){ return flows.reduce((acc,f,i)=>acc+f/Math.pow(1+rate,i),0); }
+  const flows=[-invInicial];
+  for(let y=1;y<vanAnios;y++) flows.push(flujoMes*12);
+  flows.push(flujoMes*12+valorResidual); // último año incluye venta
+  let tir=Math.max(0.01, roiNeto/100);
+  for(let i=0;i<200;i++){
+    const f=npv(tir,flows);
+    const df=(npv(tir+0.0001,flows)-f)/0.0001;
+    if(Math.abs(df)<1e-10) break;
+    const step=f/df;
+    tir=Math.max(-0.99, tir-Math.min(Math.max(step,-0.1),0.1));
+  }
+
+  // ── UPDATE DOM
+  // Regla de color: positivo = verde, negativo = rojo, neutro = marfil
+  // Para porcentajes: > 0% = verde (cualquier retorno positivo es bueno)
+  function setVal(id, numVal, displayText, isPositive){
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.textContent=displayText;
+    el.className='result-val '+(isPositive===null?'neu':isPositive?'pos':'neg');
+  }
+
+  setVal('rBruto',  null, roiBruto.toFixed(2)+'%',    roiBruto>0);
+  setVal('rNeto',   null, roiNeto.toFixed(2)+'%',     roiNeto>0);
+  setVal('rFlujo',  null, (flujoMes>=0?'+':'')+flujoMes.toFixed(2)+' UF',  flujoMes>=0);
+  setVal('rCapRate',null, capRate.toFixed(2)+'%',      capRate>0);
+
+  const elVAN=document.getElementById('rVAN');
+  if(elVAN){
+    elVAN.textContent=(van>=0?'+':'')+van.toFixed(0)+' UF';
+    elVAN.className='result-val '+(van>=0?'pos':'neg');
+  }
+  const elTIR=document.getElementById('rTIR');
+  if(elTIR){
+    elTIR.textContent=(tir*100).toFixed(1)+'%';
+    elTIR.className='result-val '+(tir>0?'pos':'neg');
+  }
+
+  const elEq=document.getElementById('rEquil');
+  if(elEq){
+    elEq.textContent=equil<200?equil+' años':'N/A';
+    // Verde ≤20 años, neutro 21-30, rojo >30
+    elEq.className='result-val '+(equil<=20?'pos':equil<=30?'neu':'neg');
+  }
+
+  // Chart
+  const bars=document.getElementById('chartBars');
+  const lbls=document.getElementById('chartLabels');
+  bars.innerHTML=''; lbls.innerHTML='';
+  const data=Array.from({length:15},(_,i)=>{
+    const y=i+1; return Math.max(0,(Math.pow(1+roiNeto/100,y)-1)*100);
+  });
+  const maxV=Math.max(...data,1);
+  data.forEach((v,i)=>{
+    const b=document.createElement('div');
+    b.className='chart-bar';
+    const pct=v/maxV; const r=Math.round(46+pct*134); const g=Math.round(36+pct*120); const bl=Math.round(16+pct*82);
+    b.style.height=Math.max(4,pct*100)+'px';
+    b.style.background=`rgb(${r},${g},${bl})`;
+    b.title=`Año ${i+1}: ${v.toFixed(1)}%`;
+    bars.appendChild(b);
+    const l=document.createElement('div'); l.className='chart-label'; l.textContent='A'+(i+1);
+    lbls.appendChild(l);
+  });
+}
+
+// ─── FORMSPREE CONTACT FORM ──────────────────────────────────────────
+document.getElementById('fsForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('fsBtn');
+  const status = document.getElementById('fsStatus');
+  const form = e.target;
+
+  // Basic validation
+  const nombre = form.nombre.value.trim();
+  const tel    = form.telefono.value.trim();
+  const email  = form.email.value.trim();
+  if(!nombre || !tel || !email){
+    status.style.display='block';
+    status.style.background='rgba(180,60,42,0.15)';
+    status.style.border='1px solid rgba(180,60,42,0.4)';
+    status.style.color='#e07060';
+    status.textContent='Por favor completa los campos obligatorios (*)';
+    return;
+  }
+
+  // Loading state
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+  btn.style.opacity='0.7';
+
+  try {
+    const res = await fetch(form.action, {
+      method:'POST',
+      body: new FormData(form),
+      headers:{ 'Accept':'application/json' }
+    });
+
+    if(res.ok){
+      // Success
+      status.style.display='block';
+      status.style.background='rgba(26,122,74,0.15)';
+      status.style.border='1px solid rgba(26,122,74,0.4)';
+      status.style.color='#4ade80';
+      status.textContent='✓ Mensaje enviado. Te contactaremos a la brevedad.';
+      form.reset();
+      btn.textContent='✓ Enviado';
+      btn.style.background='var(--green)';
+      btn.style.opacity='1';
+      // Scroll suave a confirmación
+      status.scrollIntoView({behavior:'smooth', block:'nearest'});
+    } else {
+      throw new Error('Error servidor');
+    }
+  } catch(err){
+    status.style.display='block';
+    status.style.background='rgba(180,60,42,0.15)';
+    status.style.border='1px solid rgba(180,60,42,0.4)';
+    status.style.color='#e07060';
+    status.textContent='Hubo un error al enviar. Escríbenos directamente a terearellano@caucapital.cl';
+    btn.disabled=false;
+    btn.textContent='Enviar mensaje →';
+    btn.style.opacity='1';
+    btn.style.background='';
+  }
+});
+
+// ─── FORMSPREE NEWSLETTER ─────────────────────────────────────────────
+document.getElementById('nlForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('nlBtn');
+  const emailInput = this.email;
+  if(!emailInput.value.trim()){ return; }
+  btn.disabled=true; btn.textContent='Enviando...';
+  try {
+    const res = await fetch(this.action, {
+      method:'POST', body: new FormData(this),
+      headers:{'Accept':'application/json'}
+    });
+    if(res.ok){
+      btn.textContent='✓ Suscrito';
+      btn.style.background='var(--green)';
+      emailInput.value='';
+    } else { throw new Error(); }
+  } catch {
+    btn.textContent='Error — intenta de nuevo';
+    btn.disabled=false;
+    setTimeout(()=>{ btn.textContent='Suscribirme →'; },3000);
+  }
+});
+
+// ─── PROPERTY DATA ────────────────────────────────────────────────────
+const propData = {
+  'dep-nunoa': {
+    badge: 'Departamento', status: 'available', statusLabel: '● Disponible',
+    price: '4.850 UF', priceSub: 'Ñuñoa · 52 m² · 1 Dorm · 1 Baño · Nuevo',
+    roi: '5.2%',
+    images: [
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+4 fotos',
+    specs: [
+      {label:'Superficie',val:'52 m²'},{label:'Dormitorios',val:'1'},{label:'Baños',val:'1'},
+      {label:'Piso',val:'8°'},{label:'Orientación',val:'Nororiente'},{label:'Estado',val:'En verde'},
+      {label:'Entrega',val:'2026 Q3'},{label:'Estacionamiento',val:'Incluido'}
+    ],
+    desc: 'Departamento en obra en verde en uno de los sectores con mayor demanda de arriendo en Santiago. Proyecto de inmobiliaria de primer nivel con certificación de eficiencia energética. Ubicado a 3 cuadras del metro Ñuñoa, con acceso directo a Av. Irarrázaval y excelente conectividad. Edificio con amenities completos: gimnasio, rooftop y sala de cowork.',
+    highlights: ['A 3 cuadras metro Ñuñoa','Eficiencia energética clase A','Amenities: gym + rooftop + cowork','Alta demanda de arriendo en la zona','Orientación nororiente, luminoso','Constructora con 20 años de trayectoria'],
+    address: 'Av. Ñuñoa 1234, Ñuñoa', addressSub: 'A 280 metros del Metro Ñuñoa (L3)',
+    mapLabel: 'Ñuñoa, Santiago',
+    mapLink: 'https://maps.google.com/?q=Ñuñoa+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica del proyecto', type:'PDF · 2.4 MB', href:'#'},
+      {icon:'🗺️', name:'Plano de planta tipo', type:'PDF · 1.1 MB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 890 KB', href:'#'},
+      {icon:'🏗️', name:'Sitio web de la inmobiliaria', type:'Enlace externo', href:'https://www.google.cl', external:true}
+    ],
+    waMsg: 'Hola, vi el departamento en Ñuñoa de 4.850 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: 'https://www.google.cl'
+  },
+  'casa-lascondes': {
+    badge: 'Casa', status: 'available', statusLabel: '● Disponible',
+    price: '9.200 UF', priceSub: 'Las Condes · 110 m² · 3 Dorm · 2 Baños',
+    roi: '4.8%',
+    images: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+3 fotos',
+    specs: [
+      {label:'Superficie',val:'110 m²'},{label:'Terreno',val:'180 m²'},{label:'Dormitorios',val:'3'},
+      {label:'Baños',val:'2'},{label:'Estac.',val:'2 cubiertos'},{label:'Estado',val:'Segunda mano'},
+      {label:'Año',val:'2018'},{label:'GC',val:'0 UF (casa)'}
+    ],
+    desc: 'Casa en condominio cerrado en Las Condes, sector de alta plusvalía y demanda constante de arrendatarios ejecutivos. Propiedad en excelentes condiciones, con patio privado y 2 estacionamientos techados. El condominio cuenta con portería 24/7, piscina y áreas verdes. Arriendo estimado en el rango de UF 38-42 mensual según condiciones de mercado actuales.',
+    highlights: ['Condominio cerrado con seguridad 24/7','Patio privado 70 m²','2 estacionamientos techados','Piscina y áreas verdes comunes','Alta demanda arrendatarios ejecutivos','5 min Av. Apoquindo'],
+    address: 'Los Militares 5678, Las Condes', addressSub: 'Sector El Golf – alta plusvalía',
+    mapLabel: 'Las Condes, Santiago',
+    mapLink: 'https://maps.google.com/?q=Las+Condes+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica de la propiedad', type:'PDF · 1.8 MB', href:'#'},
+      {icon:'🗺️', name:'Plano de la casa', type:'PDF · 950 KB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 760 KB', href:'#'}
+    ],
+    waMsg: 'Hola, vi la casa en Las Condes de 9.200 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: null
+  },
+  'oficina-providencia': {
+    badge: 'Oficina', status: 'reserved', statusLabel: '● En evaluación',
+    price: '6.400 UF', priceSub: 'Providencia · 65 m² · En evaluación',
+    roi: '6.1%',
+    images: [
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+2 fotos',
+    specs: [
+      {label:'Superficie',val:'65 m²'},{label:'Tipo',val:'Oficina clase A'},{label:'Piso',val:'12°'},
+      {label:'Estac.',val:'1 incluido'},{label:'Estado',val:'En evaluación'},{label:'Renta est.',val:'UF 32/mes'},
+      {label:'GC',val:'UF 2.1/mes'},{label:'Cap Rate',val:'6.1%'}
+    ],
+    desc: 'Oficina de alto estándar en edificio clase A en el corazón de Providencia. Planta libre con instalaciones de data center, climatización central y terminaciones premium. El sector concentra la mayor densidad de empresas del segmento middle market en Santiago, garantizando alta demanda de arriendo y bajas tasas de vacancia históricas. Activo actualmente en proceso de due diligence.',
+    highlights: ['Edificio clase A certificado','Planta libre – adaptable','Alta demanda sector corporativo','Cap Rate 6.1% (sobre precio total)','1 estacionamiento incluido','Portería y acceso controlado 24/7'],
+    address: 'Av. Providencia 2340, Providencia', addressSub: 'Sector Tobalaba – zona corporativa',
+    mapLabel: 'Providencia, Santiago',
+    mapLink: 'https://maps.google.com/?q=Providencia+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica del activo', type:'PDF · 2.1 MB', href:'#'},
+      {icon:'🗺️', name:'Plano de planta', type:'PDF · 1.3 MB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 820 KB', href:'#'},
+      {icon:'📋', name:'Informe de due diligence preliminar', type:'PDF · Confidencial', href:'#'}
+    ],
+    waMsg: 'Hola, vi la oficina en Providencia de 6.400 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: null
+  },
+  'dep-verde-sanmiguel': {
+    badge: 'Dpto · Verde', status: 'available', statusLabel: '● Disponible',
+    price: '3.950 UF', priceSub: 'San Miguel · 44 m² · 1 Dorm · 1 Baño · Nuevo',
+    roi: '5.8%',
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+5 fotos',
+    specs: [
+      {label:'Superficie',val:'44 m²'},{label:'Dormitorios',val:'1'},{label:'Baños',val:'1'},
+      {label:'Piso',val:'4°'},{label:'Estado',val:'En verde'},{label:'Entrega',val:'2026 Q1'},
+      {label:'Bodega',val:'Incluida'},{label:'Precio/m²',val:'UF 89.8'}
+    ],
+    desc: 'Oportunidad en blanco/verde en San Miguel, una de las comunas con mayor crecimiento de rentabilidad en los últimos 36 meses. El proyecto se ubica a 2 cuadras del metro Las Mercedes (L4A), con fácil acceso a Gran Avenida. Unidades compactas con alta eficiencia de espacio, ideales para arrendatarios jóvenes y profesionales. ROI proyectado 5.8% sobre precio total.',
+    highlights: ['A 2 cuadras Metro Las Mercedes','Precio/m² competitivo: UF 89.8','Alta demanda arriendo jóvenes profesionales','Bodega incluida en el precio','Entrega estimada Q1 2026','ROI sobre precio total: 5.8%'],
+    address: 'Gran Avenida 3456, San Miguel', addressSub: 'A 180 metros Metro Las Mercedes (L4A)',
+    mapLabel: 'San Miguel, Santiago',
+    mapLink: 'https://maps.google.com/?q=San+Miguel+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica del proyecto', type:'PDF · 1.9 MB', href:'#'},
+      {icon:'🗺️', name:'Plano de planta y emplazamiento', type:'PDF · 2.2 MB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 710 KB', href:'#'},
+      {icon:'🏗️', name:'Sitio web del proyecto', type:'Enlace externo', href:'https://www.google.cl', external:true}
+    ],
+    waMsg: 'Hola, vi el departamento en San Miguel de 3.950 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: 'https://www.google.cl'
+  },
+  'penthouse-vitacura': {
+    badge: 'Penthouse', status: 'available', statusLabel: '● Disponible',
+    price: '14.500 UF', priceSub: 'Vitacura · 180 m² · 3 Dorm · 3 Baños · Terraza',
+    roi: '4.2%',
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+6 fotos',
+    specs: [
+      {label:'Superficie',val:'180 m²'},{label:'Terraza',val:'45 m²'},{label:'Dormitorios',val:'3'},
+      {label:'Baños',val:'3'},{label:'Estac.',val:'3 cubiertos'},{label:'Bodega',val:'2 grandes'},
+      {label:'Piso',val:'Último'},{label:'Vista',val:'360° cordillera'}
+    ],
+    desc: 'Penthouse de excepción en el piso más alto del edificio, con vistas despejadas a la cordillera y la ciudad. Terminaciones de primer nivel: pisos de madera noble, cocina de diseño con electrodomésticos integrados Miele, baño en suite con tina de mármol. Terraza privada de 45 m² con posibilidad de jacuzzi. El activo más exclusivo del catálogo CAU Capital, orientado a inversores de alto patrimonio que buscan tanto rentabilidad como resguardo de valor.',
+    highlights: ['Vista 360° cordillera y ciudad','Terraza privada 45 m²','Terminaciones premium Miele','3 estacionamientos cubiertos','2 bodegas grandes','Acceso exclusivo último piso'],
+    address: 'Av. Vitacura 4567, Vitacura', addressSub: 'Sector Alonso de Córdova – máxima plusvalía',
+    mapLabel: 'Vitacura, Santiago',
+    mapLink: 'https://maps.google.com/?q=Vitacura+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica detallada', type:'PDF · 3.1 MB', href:'#'},
+      {icon:'🗺️', name:'Planos arquitectónicos', type:'PDF · 4.2 MB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 980 KB', href:'#'},
+      {icon:'🎨', name:'Book de renders 3D', type:'PDF · 8.5 MB', href:'#'}
+    ],
+    waMsg: 'Hola, vi el penthouse en Vitacura de 14.500 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: null
+  },
+  'bodega-pudahuel': {
+    badge: 'Bodega', status: 'reserved', statusLabel: '● Lista de espera',
+    price: '1.200 UF', priceSub: 'Pudahuel · 80 m² · Industrial',
+    roi: '7.2%',
+    images: [
+      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+2 fotos',
+    specs: [
+      {label:'Superficie',val:'80 m²'},{label:'Tipo',val:'Industrial'},{label:'Altura útil',val:'6 m'},
+      {label:'Acceso',val:'Camión mayor'},{label:'Estado',val:'Lista de espera'},{label:'Renta',val:'UF 7.2/mes'},
+      {label:'Cap Rate',val:'7.2%'},{label:'GC',val:'UF 0.4/mes'}
+    ],
+    desc: 'Bodega industrial en sector logístico de Pudahuel, con acceso directo a Ruta 68 y Autopista Central. Alta altura útil (6 metros) que permite optimización de almacenamiento. El sector concentra la mayor demanda de bodegas del Gran Santiago, con tasas de vacancia menores al 3% históricamente. Activo actualmente en lista de espera — contáctenos para conocer disponibilidad futura.',
+    highlights: ['Acceso directo Ruta 68','Altura útil 6 metros','Acceso camión mayor','Vacancia sectorial < 3%','Cap Rate 7.2% sobre precio total','Sector logístico consolidado'],
+    address: 'Ruta 68 km 12, Pudahuel', addressSub: 'Sector logístico – acceso Autopista Central',
+    mapLabel: 'Pudahuel, Santiago',
+    mapLink: 'https://maps.google.com/?q=Pudahuel+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica bodega', type:'PDF · 1.2 MB', href:'#'},
+      {icon:'🗺️', name:'Plano de emplazamiento', type:'PDF · 890 KB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 650 KB', href:'#'}
+    ],
+    waMsg: 'Hola, vi la bodega en Pudahuel de 1.200 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: null
+  },
+  'terreno-vitacura': {
+    badge: 'Terreno', status: 'available', statusLabel: '● Disponible',
+    price: '12.000 UF', priceSub: 'Vitacura · 320 m² · Uso mixto',
+    roi: '5.0%',
+    images: [
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1592595896551-12b371d546d5?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+3 fotos',
+    specs: [
+      {label:'Superficie',val:'320 m²'},{label:'Uso',val:'Mixto'},{label:'Coef. constructib.',val:'x4.0'},
+      {label:'Rasante',val:'Favorable'},{label:'Serv. básicos',val:'Conectados'},{label:'Plano reg.',val:'Disponible'},
+      {label:'Precio/m²',val:'UF 37.5'},{label:'Cap Rate',val:'5.0%'}
+    ],
+    desc: 'Terreno de uso mixto en Vitacura, uno de los sectores con mayor plusvalía del Gran Santiago. Con coeficiente de constructibilidad x4.0 y regulación municipal favorable, el terreno permite desarrollar un proyecto residencial o mixto de hasta 1.280 m² construidos. Todos los servicios básicos conectados y estudio de factibilidad disponible. Oportunidad de desarrollo o inversión a largo plazo con alta potencial de valorización.',
+    highlights: ['Coeficiente x4.0 – alta densidad permitida','Uso mixto: residencial + comercial','Todos los servicios conectados','Plusvalía Vitacura histórica > 5% anual','Estudio de factibilidad disponible','Precio/m² competitivo para el sector'],
+    address: 'Camino El Alba 890, Vitacura', addressSub: 'Sector residencial de alta plusvalía',
+    mapLabel: 'Vitacura, Santiago',
+    mapLink: 'https://maps.google.com/?q=Vitacura+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica del terreno', type:'PDF · 1.5 MB', href:'#'},
+      {icon:'🗺️', name:'Plano regulador comunal', type:'PDF · 2.8 MB', href:'#'},
+      {icon:'📊', name:'Estudio de factibilidad CAU', type:'PDF · 1.1 MB', href:'#'},
+      {icon:'📋', name:'Informe de tasación independiente', type:'PDF · Confidencial', href:'#'}
+    ],
+    waMsg: 'Hola, vi el terreno en Vitacura de 12.000 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: null
+  },
+  'dep-lareina': {
+    badge: 'Departamento', status: 'available', statusLabel: '● Disponible',
+    price: '5.200 UF', priceSub: 'La Reina · 60 m² · 2 Dorm · 1 Baño',
+    roi: '4.9%',
+    images: [
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85&fit=crop&crop=center',
+      'https://images.unsplash.com/photo-1560185008-b033106af5c3?w=800&q=80&fit=crop',
+      'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80&fit=crop'
+    ],
+    extraCount: '+3 fotos',
+    specs: [
+      {label:'Superficie',val:'60 m²'},{label:'Dormitorios',val:'2'},{label:'Baños',val:'1'},
+      {label:'Piso',val:'5°'},{label:'Estado',val:'Seminuevo'},{label:'Año',val:'2020'},
+      {label:'Estac.',val:'1 incluido'},{label:'GC',val:'UF 1.4/mes'}
+    ],
+    desc: 'Departamento seminuevo en La Reina, sector residencial consolidado con alta calidad de vida y fuerte demanda de familias. La unidad presenta terminaciones en excelente estado, cocina equipada y dormitorios amplios. El edificio cuenta con portería, área de juegos y estacionamiento de visitas. Renta actual estimada entre UF 21-24 mensual, con baja rotación de arrendatarios en el sector.',
+    highlights: ['Sector familiar consolidado','Baja rotación de arrendatarios','Cocina equipada incluida','1 estacionamiento','Excelente conectividad Av. Larraín','A 10 min centros comerciales La Reina'],
+    address: 'Av. Larraín 5432, La Reina', addressSub: 'Sector residencial – alta calidad de vida',
+    mapLabel: 'La Reina, Santiago',
+    mapLink: 'https://maps.google.com/?q=La+Reina+Santiago',
+    docs: [
+      {icon:'📄', name:'Ficha técnica del departamento', type:'PDF · 1.6 MB', href:'#'},
+      {icon:'🗺️', name:'Plano de planta', type:'PDF · 780 KB', href:'#'},
+      {icon:'📊', name:'Análisis de rentabilidad CAU', type:'PDF · 690 KB', href:'#'}
+    ],
+    waMsg: 'Hola, vi el departamento en La Reina de 5.200 UF en el sitio de CAU Capital y me gustaría más información.',
+    projectUrl: null
+  }
+};
+
+// ─── MODAL OPEN ────────────────────────────────────────────────────────
+function openPropModal(key) {
+  const d = propData[key];
+  if (!d) return;
+
+  // Gallery
+  const g1 = document.getElementById('modalImg1');
+  const g2 = document.getElementById('modalImg2');
+  const g3 = document.getElementById('modalImg3');
+  g1.innerHTML = `<img src="${d.images[0]}" alt="${d.badge}" style="width:100%;height:100%;object-fit:cover;">`;
+  g2.innerHTML = `<img src="${d.images[1]}" alt="${d.badge}" style="width:100%;height:100%;object-fit:cover;">`;
+  // Keep count overlay on third thumb
+  const img3content = d.images[2]
+    ? `<img src="${d.images[2]}" alt="${d.badge}" style="width:100%;height:100%;object-fit:cover;">`
+    : '';
+  g3.innerHTML = img3content + `<div class="gallery-count">${d.extraCount}</div>`;
+
+  // Header
+  document.getElementById('modalBadge').textContent = d.badge;
+  const pill = document.getElementById('modalStatusPill');
+  pill.textContent = d.statusLabel;
+  pill.className = 'modal-status-pill ' + d.status;
+  document.getElementById('modalPrice').textContent = d.price;
+  document.getElementById('modalPriceSub').textContent = d.priceSub;
+  document.getElementById('modalRoi').textContent = d.roi;
+
+  // Specs
+  const specsEl = document.getElementById('modalSpecs');
+  specsEl.innerHTML = d.specs.map(s =>
+    `<div class="spec-item"><span class="spec-label">${s.label}</span><span class="spec-val">${s.val}</span></div>`
+  ).join('');
+
+  // Description tab
+  document.getElementById('modalDesc').textContent = d.desc;
+  document.getElementById('modalHighlights').innerHTML = d.highlights.map(h =>
+    `<div class="modal-highlight">${h}</div>`
+  ).join('');
+
+  // Location tab
+  document.getElementById('modalMapLabel').textContent = d.mapLabel;
+  document.getElementById('modalMapLink').href = d.mapLink;
+  document.getElementById('modalAddress').textContent = d.address;
+  document.getElementById('modalAddressSub').textContent = d.addressSub;
+
+  // Docs tab
+  document.getElementById('modalDocs').innerHTML = d.docs.map(doc =>
+    `<a class="modal-doc-item" href="${doc.href}" ${doc.external ? 'target="_blank"' : ''}>
+      <div class="doc-icon">${doc.icon}</div>
+      <div class="doc-info">
+        <div class="doc-name">${doc.name}</div>
+        <div class="doc-type">${doc.type}</div>
+      </div>
+      <span class="doc-arrow">↗</span>
+    </a>`
+  ).join('');
+
+  // Footer CTAs
+  const waNum = '56900000000'; // reemplazar con número real
+  document.getElementById('modalWhatsApp').href = `https://wa.me/${waNum}?text=${encodeURIComponent(d.waMsg)}`;
+  document.getElementById('modalContactBtn').onclick = () => {
+    closePropModalDirect();
+    openContact(d.badge + ' ' + d.price);
+  };
+  const projLink = document.getElementById('modalProjectLink');
+  if (d.projectUrl) {
+    projLink.href = d.projectUrl;
+    projLink.style.display = '';
+  } else {
+    projLink.style.display = 'none';
+  }
+
+  // Reset tabs
+  document.querySelectorAll('.modal-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  document.querySelectorAll('.modal-tab-panel').forEach((p,i) => p.classList.toggle('active', i===0));
+
+  // Scroll modal to top & open
+  document.getElementById('propModal').scrollTop = 0;
+  document.getElementById('propModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePropModal(e) {
+  if (e.target === document.getElementById('propModalOverlay')) closePropModalDirect();
+}
+function closePropModalDirect() {
+  document.getElementById('propModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePropModalDirect(); });
+
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.modal-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────
+calcSim();
+</script>
+</body>
+</html>
