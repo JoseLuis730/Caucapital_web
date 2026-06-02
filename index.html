@@ -166,11 +166,13 @@ section { position: relative; }
 .view-toggle { display: flex; gap: 2px; background: var(--mid); border-radius: 6px; padding: 3px; }
 .view-btn { padding: 0.35rem 0.8rem; border-radius: 4px; font-size: 0.82rem; cursor: pointer; border: none; background: transparent; color: var(--gray); font-family: var(--ff-sans); transition: all 0.2s; }
 .view-btn.active { background: var(--dark); color: var(--gold); }
-.props-grid { display: grid; grid-template-columns: repeat(3, 1fr) !important; gap: 1.75rem; width: 100%; box-sizing: border-box; }
+
 .prop-card-extra { display: none; }
+.props-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media (max-width: 600px) { .props-grid { grid-template-columns: 1fr; } }
 .props-grid.show-all .prop-card-extra { display: block; }
 @media (max-width: 600px) {
-  .props-grid { grid-template-columns: 1fr !important; }
+  
 }
 .prop-card {
   background: var(--mid); border-radius: 10px; overflow: hidden;
@@ -702,9 +704,9 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
 </section>
 
 <!-- ═══════════════════════ PROPIEDADES ═══════════════════════ -->
-<section id="propiedades" style="width:100%;display:block;">
-  <div class="container" style="padding: 6rem 2rem; width:100%; max-width:1240px; margin:0 auto; box-sizing:border-box; display:block;">
-    <div class="section-header fade-in">
+<section id="propiedades" style="background:var(--dark);padding:6rem 0;">
+  <div style="max-width:1240px;margin:0 auto;padding:0 2rem;box-sizing:border-box;">
+    <div class="section-header fade-in" style="margin-bottom:3rem;">
       <span class="eyebrow">Catálogo exclusivo</span>
       <h2>Propiedades seleccionadas<br>con criterio.</h2>
       <div class="gold-line"></div>
@@ -726,9 +728,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
         </div>
       </div>
     </div>
-    <div class="props-grid" id="propsGrid" style="display:grid !important; grid-template-columns:repeat(3,minmax(200px,1fr)) !important; gap:1.75rem !important; width:100% !important; box-sizing:border-box !important;">
-
-      <!-- PROPIEDAD: Franklin 358 -->
+    <div id="propsGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;width:100%;box-sizing:border-box;">
       <div class="prop-card fade-in" data-type="dep nuevo">
         <div class="prop-img"><img class="prop-img-bg" src="https://www.pilares.cl/wp-content/uploads/2026/02/Desktop-Imagen-Principal-Franklin-358.webp" alt="Franklin 358 · Santiago" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
         <span class="prop-badge">Departamento</span>
@@ -743,7 +743,8 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
             <button class="prop-cta" onclick="openContact('Franklin 358 · Santiago · Desde 1.790 UF')">Agendar →</button>
           </div>
         </div>
-      
+      </div>
+
       <!-- PROPIEDAD: Rodríguez Velasco 10 -->
       <div class="prop-card fade-in" data-type="dep">
         <div class="prop-img"><img class="prop-img-bg" src="https://www.pilares.cl/wp-content/uploads/2021/08/Desktop-Galeria-de-Imagen-1-1.jpg" alt="Rodríguez Velasco 10 · La Florida" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
@@ -779,7 +780,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
       </div>
 
       <!-- PROPIEDAD: Santos Dumont -->
-      <div class="prop-card fade-in prop-card-extra" data-type="dep">
+      <div class="prop-card fade-in" data-type="dep">
         <div class="prop-img"><img class="prop-img-bg" src="https://www.pilares.cl/centro-urbano-santos-dumont/assets/img/deptos/espacios-integrados.jpg" alt="Centro Urbano Santos Dumont · Independencia" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#2E3650,#1C2235)';this.remove()"></div>
         <span class="prop-badge">Departamento</span>
         <div class="prop-status available"></div>
@@ -863,6 +864,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
         </div>
       </div>
 
+    </div>
     </div>
     <div style="text-align:center;margin-top:2.5rem;">
       <button id="btnVerTodas" class="btn btn-outline" onclick="togglePropiedades()" style="font-size:0.95rem;padding:0.8rem 2.5rem;">
@@ -2018,11 +2020,12 @@ function switchTab(btn, panelId) {
 
 // ─── TOGGLE PROPIEDADES ───────────────────────────────────────────────
 function togglePropiedades() {
-  const grid = document.getElementById('propsGrid');
   const btn = document.getElementById('btnVerTodas');
-  const showing = grid.classList.toggle('show-all');
-  btn.textContent = showing ? '← Ver menos propiedades' : 'Ver todas las propiedades →';
-  if (!showing) {
+  const extras = document.querySelectorAll('#propsGrid .prop-card-extra');
+  const showing = extras[0] && extras[0].style.display === 'block';
+  extras.forEach(c => c.style.display = showing ? 'none' : 'block');
+  btn.textContent = showing ? 'Ver todas las propiedades →' : '← Ver menos propiedades';
+  if (showing) {
     document.getElementById('propiedades').scrollIntoView({behavior:'smooth'});
   }
 }
