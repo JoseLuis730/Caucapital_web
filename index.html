@@ -702,8 +702,8 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
 </section>
 
 <!-- ═══════════════════════ PROPIEDADES ═══════════════════════ -->
-<section id="propiedades">
-  <div class="container" style="padding: 6rem 2rem; width:100%; box-sizing:border-box;">
+<section id="propiedades" style="width:100%;display:block;">
+  <div class="container" style="padding: 6rem 2rem; width:100%; max-width:1240px; margin:0 auto; box-sizing:border-box; display:block;">
     <div class="section-header fade-in">
       <span class="eyebrow">Catálogo exclusivo</span>
       <h2>Propiedades seleccionadas<br>con criterio.</h2>
@@ -726,7 +726,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
         </div>
       </div>
     </div>
-    <div class="props-grid" id="propsGrid" style="display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:1.75rem !important; width:100% !important;">
+    <div class="props-grid" id="propsGrid" style="display:grid !important; grid-template-columns:repeat(3,minmax(200px,1fr)) !important; gap:1.75rem !important; width:100% !important; box-sizing:border-box !important;">
 
       <!-- PROPIEDAD: Franklin 358 -->
       <div class="prop-card fade-in" data-type="dep nuevo">
