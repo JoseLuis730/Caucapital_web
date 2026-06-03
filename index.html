@@ -1046,7 +1046,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
         <div class="team-info">
           <div class="team-name">María Teresa Arellano</div>
           <div class="team-role">Socia Fundadora</div>
-          <div class="team-email">tarellano@caucapital.cl</div>
+          <div class="team-email"><a href="mailto:tarellano@caucapital.cl" style="color:var(--gold);text-decoration:none;">tarellano@caucapital.cl</a></div>
         </div>
       </div>
       <div class="team-card fade-in">
@@ -1055,7 +1055,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
         <div class="team-info">
           <div class="team-name">Rodrigo Urrutia</div>
           <div class="team-role">Socio Fundador</div>
-          <div class="team-email">rurrutia@caucapital.cl</div>
+          <div class="team-email"><a href="mailto:rurrutia@caucapital.cl" style="color:var(--gold);text-decoration:none;">rurrutia@caucapital.cl</a></div>
         </div>
       </div>
       <div class="team-card fade-in">
@@ -1064,7 +1064,7 @@ footer { background: var(--mid); border-top: 1px solid rgba(255,255,255,0.06); p
         <div class="team-info">
           <div class="team-name">José Luis Campino</div>
           <div class="team-role">Socio Fundador</div>
-          <div class="team-email">jcampino@caucapital.cl</div>
+          <div class="team-email"><a href="mailto:jcampino@caucapital.cl" style="color:var(--gold);text-decoration:none;">jcampino@caucapital.cl</a></div>
         </div>
       </div>
     </div>
@@ -1962,7 +1962,11 @@ function openPropModal(key) {
   // Location tab
   document.getElementById('modalMapLabel').textContent = d.mapLabel;
   document.getElementById('modalMapLink').href = d.mapLink;
-  document.getElementById('modalAddress').textContent = d.address;
+  document.getElementById('modalMapLink').onclick = function(e) {
+    e.preventDefault();
+    window.open(d.mapLink, '_blank');
+  };
+  document.getElementById('modalAddress').innerHTML = `<a href="${d.mapLink}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">${d.address} ↗</a>`;
   document.getElementById('modalAddressSub').textContent = d.addressSub;
 
   // Docs tab
